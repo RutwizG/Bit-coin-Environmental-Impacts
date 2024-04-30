@@ -51,9 +51,7 @@ To replicate our study and explore the link between Bitcoin's market behaviors a
 2. **Environment setup:**
    - Python is a prerequisite with libraries `pandas`, `numpy`, `scikit-learn`, `tensorflow`, `matplotlib`.
 3. **Run the analysis:**
-   - In `notebooks/`, the `data_preprocessing.ipynb` handles initial data cleaning.
-   - `exploratory_data_analysis.ipynb` performs statistical analysis and creates visualizations.
-   - `model_prediction.ipynb` details the construction and validation of our predictive LSTM model.
+   - `bitcoin_environmental_analysis.ipynb` details the construction and validation of our predictive LSTM model.
 
 ## Findings
 
