@@ -1,0 +1,155 @@
+from pathlib import Path
+
+notebook_content = {
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "# Bitcoin Environmental Impact - Data Engineering Project\n",
+                "This notebook demonstrates the pipeline for ingesting, cleaning, transforming,\n",
+                "and analyzing Bitcoin market and environmental data using Python and popular data engineering libraries."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 1,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "# Import required libraries\n",
+                "import pandas as pd\n",
+                "import numpy as np\n",
+                "import matplotlib.pyplot as plt\n",
+                "import seaborn as sns\n",
+                "from sqlalchemy import create_engine\n",
+                "from pyspark.sql import SparkSession\n",
+                "import requests\n",
+                "import json"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Step 1: Data Ingestion\n",
+                "Read data from local files or fetch from external sources (e.g., APIs or cloud storage)."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 2,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "# Simulate data load from local CSV/Excel (mocked)\n",
+                "btc_market_data = pd.read_excel('btc-usd-max.xls')\n",
+                "env_data = pd.read_excel('BTC_Footprints_v1.xlsx')"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Step 2: Data Cleaning\n",
+                "Ensure consistency and handle missing/duplicate values."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 3,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "# Remove duplicates and handle missing values\n",
+                "btc_market_data.drop_duplicates(inplace=True)\n",
+                "env_data.drop_duplicates(inplace=True)\n",
+                "btc_market_data.fillna(btc_market_data.median(numeric_only=True), inplace=True)\n",
+                "env_data.fillna(env_data.select_dtypes(include='number').mean(), inplace=True)"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Step 3: Data Integration\n",
+                "Join datasets on Date column and generate features."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 4,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "btc_market_data['Date'] = pd.to_datetime(btc_market_data['Date'])\n",
+                "env_data['Date'] = pd.to_datetime(env_data['Date'])\n",
+                "combined_df = pd.merge(btc_market_data, env_data, on='Date', how='inner')"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Step 4: Data Transformation\n",
+                "Normalize data for machine learning and feature engineering."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 5,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "from sklearn.preprocessing import MinMaxScaler\n",
+                "\n",
+                "scaler = MinMaxScaler()\n",
+                "combined_df[['price', 'BTCENEGUE', 'total_volume']] = scaler.fit_transform(\n",
+                "    combined_df[['price', 'BTCENEGUE', 'total_volume']])"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## Step 5: Data Visualization\n",
+                "Display patterns and relationships between price and energy usage."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 6,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "plt.figure(figsize=(14, 7))\n",
+                "sns.scatterplot(data=combined_df, x='price', y='BTCENEGUE', size='total_volume', hue='total_volume', alpha=0.6)\n",
+                "plt.title('Bitcoin Price vs. Energy Consumption')\n",
+                "plt.xlabel('Normalized Price')\n",
+                "plt.ylabel('Normalized Energy Consumption')\n",
+                "plt.legend()\n",
+                "plt.show()"
+            ]
+        }
+    ],
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 3",
+            "language": "python",
+            "name": "python3"
+        },
+        "language_info": {
+            "name": "python",
+            "version": "3.10.0"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 5
+}
+
+# Save notebook as JSON file
+notebook_path = Path("/mnt/data/bitcoin_data_engineering_project.ipynb")
+import json
+notebook_path.write_text(json.dumps(notebook_content, indent=2))
+
+notebook_path.name
