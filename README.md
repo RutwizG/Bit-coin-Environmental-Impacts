@@ -114,6 +114,26 @@ python pipeline/transform.py
 | Visualization       | Plotly Dash / Tableau |
 | Containerization    | Docker             |
 
+📊 Visualization: Bitcoin Market Activity vs. Energy Consumption
+
+This bubble chart provides a dynamic visual representation of the relationship between Bitcoin's market activity and its estimated energy consumption over time:
+
+![image](https://github.com/user-attachments/assets/0c4687e3-fc76-41cd-9124-4e6f02778628)
+
+🔍 Key Observations:
+Bubble Size: Represents trading volume — larger bubbles signify periods of higher Bitcoin trading activity.
+
+Y-Axis (Vertical): Shows estimated energy consumption in TWh.
+
+X-Axis (Horizontal): Time progression from early 2018 to mid-2021.
+
+Color Gradient: Reflects normalized trading volume; warmer shades indicate more intense activity.
+
+Trend Insight: The chart reveals a consistent upward trend in energy consumption, closely aligning with surges in trading volume. This correlation highlights how Bitcoin's market growth directly contributes to increased environmental impact.
+
+🌱 Why It Matters:
+This visualization supports our research objective of understanding the environmental consequences of Bitcoin’s market dynamics. The chart strengthens the observed correlation between trading spikes and energy usage, reinforcing the need for sustainable innovations in cryptocurrency systems.
+
 ## 🙏 Acknowledgments
 
 - Elharony (2024), Khosravi & Säämäki (2023), Köhler & Pizzol (2019) – for foundational environmental insights
